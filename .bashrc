@@ -57,10 +57,83 @@ alias df='df -h'			# show block by MB
 alias tarx='tar zxvf'
 alias tarc='tar zcvf'
 alias nogrep='grep -v'
+adlias diffdir='diff -rq'
 
 #===================================
 # Function(useful)
 #===================================
+rec_list_file ()
+{
+    for fi in "$@"; do
+        thisf=$thisf/$fi
+    
+        if [ -d "$thisf" ]; then
+            rec_list_file $(command ls $thisf)
+        else
+            echo -e $thisf
+        fi
+
+        thisf=${thisf%/*}
+    done
+}
+
+list_file ()
+{
+    for fi in "$@"; do
+      if [ -d "$fi" ]; then
+        thisf=${fi%\/}
+        rec_list_file $(command ls $fi)
+      fi
+    done
+}
+
+flatten_dir ()
+{
+    input_dir=$1
+    output_dir=$2
+
+    inputs=$(list_file $input_dir)
+    for fi in $inputs; do
+        output_fi=${fi//\//_}
+        mkdir -p $output_fi
+    done
+}
+
+rec_list_dir ()
+{
+    for fi in "$@"; do
+        thisf=$thisf/$fi
+    
+        if [ -d "$thisf" ]; then
+            echo -e $thisf
+            rec_list_dir $(command ls $thisf)
+        fi
+
+        thisf=${thisf%/*}
+    done
+}
+
+list_dir ()
+{
+    for fi in "$@"; do
+      if [ -d "$fi" ]; then
+        thisf=${fi%/}
+        rec_list_dir $(command ls $fi)
+      fi
+    done
+}
+
+copy_dir ()
+{
+    input_dir=$1
+    output_dir=${2%/}
+
+    inputs=$(list_dir $input_dir)
+    for fi in $inputs; do
+        output_fi=$output_dir/${fi#*/}
+        echo -e $output_fi
+    done
+}
 
 #===================================
 # history cd
