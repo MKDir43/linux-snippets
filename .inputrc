@@ -1,0 +1,4 @@
+set bell-style none
+set convert-meta off
+set mark-directories off
+set print-completions-horizontally on

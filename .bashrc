@@ -7,7 +7,7 @@ fi
 # bash completion
 #===================================
 if [ -f /etc/bash_completion ]; then
-		. /etc/bash_completion
+	. /etc/bash_completion
 fi
 
 #===================================
@@ -25,6 +25,17 @@ git_branch() {
 }
 
 PS1='\[$red\](\!)$(git_branch)$(hg_branch)\[$reset\]\[$green\][\u@\[$reset\]\[$blue\]\w\[$reset\] \[$green\]]\$ \[$reset\]'
+
+#===================================
+# shopt
+#===================================
+shopt -s autocd
+shopt -s cdable_vars
+shopt -s cdspell
+shopt -s direxpand
+shopt -s dirspell
+shopt -s execfail
+shopt -s globstar
 
 #===================================
 # History
